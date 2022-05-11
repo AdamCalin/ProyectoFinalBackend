@@ -1,0 +1,37 @@
+﻿using ConexionBaseDatos.BaseDatos;
+using ConexionBaseDatos.BaseDatos.Articulos.Base_Datos;
+using ConexionBaseDatos.DTOs;
+
+namespace ConexionBaseDatos
+{
+
+	public interface IArticuloService
+	{
+		public List<ARTICULOS> GetArticulo();
+		public string PostArticulo(CrearArticuloDTO articulo);
+	}
+
+	public class ArticulosService: IArticuloService
+	{
+		public ArticuloDbContext _context;
+		public ArticulosService(ArticuloDbContext context){
+			_context = context;
+		}
+
+
+		public List<ARTICULOS> GetArticulo()
+		{
+			return _context.ARTICULOS.ToList();
+		}
+
+		public string PostArticulo(CrearArticuloDTO articulo)
+		{
+			var mensaje = "";
+			var retCode = 0;
+			
+			_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.alto, articulo.largo, articulo.ancho, articulo.precio, articulo.n_registro, out mensaje, out retCode);	
+
+			return "Articulo añadido correctamente";
+		}
+	}
+}
