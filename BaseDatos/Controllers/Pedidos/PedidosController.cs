@@ -1,19 +1,19 @@
 ﻿using ConexionBaseDatos.BaseDatos;
+using ConexionBaseDatos.BaseDatos.Pedidos.Base_Datos;
+using ConexionBaseDatos.DTOs;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace ConexionBaseDatos.Controllers
 {
-
 	[ApiController]
 	[Route("api/pedidos")]
-	public class PedidosController : ControllerBase
+	public class Pedidos_ArticulosController : ControllerBase
 	{
 
 		public readonly IPedidosService _service;
-		private readonly DAWDbContext _context;
+		private readonly PedidosDbContext _context;
 
-		public PedidosController(IPedidosService service, DAWDbContext context)
+		public Pedidos_ArticulosController(IPedidosService service, PedidosDbContext context)
 		{
 			this._service = service;
 			this._context = context;
@@ -26,11 +26,9 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Post(PEDIDOS pedido)
+		public string Post(CrearPedidoDTO pedido)
 		{
-			_context.Add(pedido);
-			_context.SaveChanges();
-			return Ok();
+			return _service.PostPedido(pedido);
 		}
 	}
 }

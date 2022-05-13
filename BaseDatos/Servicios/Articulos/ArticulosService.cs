@@ -11,10 +11,10 @@ namespace ConexionBaseDatos
 		public string PostArticulo(CrearArticuloDTO articulo);
 	}
 
-	public class ArticulosService: IArticuloService
+	public class ArticuloService: IArticuloService
 	{
 		public ArticuloDbContext _context;
-		public ArticulosService(ArticuloDbContext context){
+		public ArticuloService(ArticuloDbContext context){
 			_context = context;
 		}
 

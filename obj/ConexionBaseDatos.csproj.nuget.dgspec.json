@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\practicas\\Documents\\.NETAdam\\NEvER\\ConexionBaseDatos\\ConexionBaseDatos.csproj": {}
+    "C:\\NEvER\\NEvER BackEnd\\ConexionBaseDatos.csproj": {}
   },
   "projects": {
-    "C:\\Users\\practicas\\Documents\\.NETAdam\\NEvER\\ConexionBaseDatos\\ConexionBaseDatos.csproj": {
+    "C:\\NEvER\\NEvER BackEnd\\ConexionBaseDatos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\practicas\\Documents\\.NETAdam\\NEvER\\ConexionBaseDatos\\ConexionBaseDatos.csproj",
+        "projectUniqueName": "C:\\NEvER\\NEvER BackEnd\\ConexionBaseDatos.csproj",
         "projectName": "ConexionBaseDatos",
-        "projectPath": "C:\\Users\\practicas\\Documents\\.NETAdam\\NEvER\\ConexionBaseDatos\\ConexionBaseDatos.csproj",
+        "projectPath": "C:\\NEvER\\NEvER BackEnd\\ConexionBaseDatos.csproj",
         "packagesPath": "C:\\Users\\practicas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\practicas\\Documents\\.NETAdam\\NEvER\\ConexionBaseDatos\\obj\\",
+        "outputPath": "C:\\NEvER\\NEvER BackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\DevExpress 20.2\\.NET Core Desktop Libraries\\Offline Packages",
@@ -56,21 +56,41 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "IKVM": {
               "target": "Package",
               "version": "[8.1.5717, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.5, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.4, )"
+              "version": "[6.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.4, )"
             },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.17.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.17.0, )"
             }
           },
           "imports": [

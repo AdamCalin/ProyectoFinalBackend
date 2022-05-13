@@ -1,8 +1,7 @@
 ﻿using ConexionBaseDatos.BaseDatos;
-using ConexionBaseDatos.BaseDatos.Direcciones.Base_Datos;
+using ConexionBaseDatos.BaseDatos.Stock.Base_Datos;
 using ConexionBaseDatos.DTOs;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace ConexionBaseDatos.Controllers
 {

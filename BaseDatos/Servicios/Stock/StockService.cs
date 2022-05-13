@@ -1,5 +1,5 @@
 ﻿using ConexionBaseDatos.BaseDatos;
-using ConexionBaseDatos.BaseDatos.Direcciones.Base_Datos;
+using ConexionBaseDatos.BaseDatos.Stock.Base_Datos;
 using ConexionBaseDatos.DTOs;
 
 namespace ConexionBaseDatos

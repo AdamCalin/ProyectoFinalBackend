@@ -1,7 +1,9 @@
 using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Articulos.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 namespace ConexionBaseDatos.Controllers
 {
 
@@ -20,6 +22,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet]
+		[Authorize]
 		public ActionResult<List<ARTICULOS>> Get()
 		{
 			return _service.GetArticulo();

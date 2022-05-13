@@ -1,10 +1,11 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 
 {
-	public class ArticuloDbContext: DbContext
+	public class ArticuloDbContext: IdentityDbContext
 	{
 		public ArticuloDbContext(DbContextOptions<ArticuloDbContext> options) : base(options)
 		{
@@ -16,6 +17,7 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			base.OnModelCreating(modelBuilder);
 
 			//ENTITY ARTICULOS
 			modelBuilder.Entity<ARTICULOS>(entity =>

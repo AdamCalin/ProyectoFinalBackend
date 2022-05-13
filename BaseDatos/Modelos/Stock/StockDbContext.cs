@@ -1,9 +1,10 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace ConexionBaseDatos.BaseDatos.Direcciones.Base_Datos
+namespace ConexionBaseDatos.BaseDatos.Stock.Base_Datos
 {
-	public class StockDbContext : DbContext
+	public class StockDbContext : IdentityDbContext
 	{
 		public StockDbContext(DbContextOptions<StockDbContext> options) : base(options)
 		{
@@ -15,7 +16,7 @@ namespace ConexionBaseDatos.BaseDatos.Direcciones.Base_Datos
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-
+			base.OnModelCreating(modelBuilder);
 			//ENTITY STOCK
 			modelBuilder.Entity<STOCK>(entity =>
 			{
