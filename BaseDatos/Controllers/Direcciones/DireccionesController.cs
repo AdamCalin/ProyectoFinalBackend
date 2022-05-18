@@ -1,6 +1,7 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Direcciones.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConexionBaseDatos.Controllers
@@ -22,25 +23,48 @@ namespace ConexionBaseDatos.Controllers
 		[HttpGet]
 		public ActionResult<List<DIRECCIONES>> Get()
 		{
-			return _service.GetDireccion();
+			try{
+				return _service.GetDireccion();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("DireccionesController.HttpGet.TryCatch", ex);
+			}
+			
 		}
-
+		[Authorize(AuthenticationSchemes = "Bearer")]
 		[HttpPost]
 		public string Post(CrearDireccionDTO direccion)
 		{
-			return _service.PostDireccion(direccion);
+			try{
+				return _service.PostDireccion(direccion);
+			}
+			catch(Exception ex)
+			{
+				throw new Exception("DireccionesController.HttpPost.TryCatch", ex);
+			}
+			
 		}
+		[Authorize(AuthenticationSchemes = "Bearer")]
 		[HttpPut("{id_usuario:int}")]
 		public ActionResult Put(DIRECCIONES direccion, int id_usuario)
 		{
-			if (direccion.ID_USUARIO != id_usuario)
+			try{
+				if (direccion.ID_USUARIO != id_usuario)
+				{
+					return BadRequest("El id del usuario no coincide");
+				}
+
+				_context.Update(direccion);
+				_context.SaveChanges();
+				return Ok();
+			}
+			catch(Exception ex)
 			{
-				return BadRequest("El id del usuario no coincide");
+				throw new Exception("DireccionesController.HttpPut.TryCatch", ex);
 			}
 
-			_context.Update(direccion);
-			_context.SaveChanges();
-			return Ok();
+
 		}
 	}
 }

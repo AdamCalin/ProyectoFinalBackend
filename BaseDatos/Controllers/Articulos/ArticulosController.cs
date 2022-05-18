@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace ConexionBaseDatos.Controllers
 {
 
+	
 	[ApiController]
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	[Route("api/articulos")]
 	public class ArticulosController : ControllerBase
 	{
@@ -20,21 +22,32 @@ namespace ConexionBaseDatos.Controllers
 			_service = service;
 			_context = context;
 		}
-
 		[HttpGet]
-		[Authorize]
+		[AllowAnonymous]
 		public ActionResult<List<ARTICULOS>> Get()
 		{
-			return _service.GetArticulo();
+			try
+			{
+				return _service.GetArticulo();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("ArticulosController.HttpGet.", ex);
+			}
 		}
-
+		
 		[HttpPost]
 		public string Post(CrearArticuloDTO articulo )
 		{
-			return _service.PostArticulo(articulo); 
+			try {
+				return _service.PostArticulo(articulo);
+			}
+			catch (Exception ex){
+				throw new Exception("ArticulosController.HttpPost.", ex);
+			}
+			
 			 
 		}
-
 		[HttpPut("{id_articulo:int}")]
 		public ActionResult Put(ARTICULOS articulo, int id_articulo)
 		{

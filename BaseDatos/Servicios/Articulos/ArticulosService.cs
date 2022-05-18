@@ -26,12 +26,20 @@ namespace ConexionBaseDatos
 
 		public string PostArticulo(CrearArticuloDTO articulo)
 		{
-			var mensaje = "";
-			var retCode = 0;
-			
-			_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.alto, articulo.largo, articulo.ancho, articulo.precio, articulo.n_registro, out mensaje, out retCode);	
+			try
+			{
+				var mensaje = "";
+				var retCode = 0;
 
-			return "Articulo añadido correctamente";
+				_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.alto, articulo.largo, articulo.ancho, articulo.precio, articulo.n_registro, out mensaje, out retCode);
+
+				return "Articulo añadido correctamente";
+			}
+			catch (Exception ex)
+			{
+
+				throw new Exception(ex.Message);
+			}
 		}
 	}
 }

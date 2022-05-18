@@ -42,21 +42,31 @@ builder.Services.AddScoped<IPedidos_articulosService, Pedidos_ArticulosService>(
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(opciones => opciones.TokenValidationParameters = new TokenValidationParameters
 	{
-		ValidateActor = true,
-		ValidateAudience = true,
+		ValidateIssuer = false,
+		ValidateAudience = false,
 		ValidateLifetime = true,
 		ValidateIssuerSigningKey = true,
-		ValidIssuer = builder.Configuration["Jwt:Issuer"],
-		ValidAudience = builder.Configuration["Jwt:Audience"],
 		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
 	});
 builder.Services.AddAuthorization();
- 
+
+
 //MAPERS
+
+//ENCRIPTACION
+builder.Services.AddDataProtection();
 
 
 //IDENTIDADES
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ArticuloDbContext>().AddEntityFrameworkStores<CuentasDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+	.AddEntityFrameworkStores<ArticuloDbContext>()
+	.AddEntityFrameworkStores<CuentasDbContext>()
+	.AddEntityFrameworkStores<DireccionesDbContext>()
+	.AddEntityFrameworkStores<UsuarioDbContext>()
+	.AddEntityFrameworkStores<StockDbContext>()
+	.AddEntityFrameworkStores<PedidosDbContext>()
+	.AddEntityFrameworkStores<PedidosArticulosDbContext>()
+	.AddDefaultTokenProviders();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -67,7 +77,7 @@ builder.Services.AddSwaggerGen(c=>
 	{
 		Name = "Authorization",
 		Type = SecuritySchemeType.ApiKey,
-		Scheme = "Beearer",
+		Scheme = "Bearer",
 		BearerFormat = "JWT",
 		In = ParameterLocation.Header
 	});
@@ -102,6 +112,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

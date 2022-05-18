@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zct1bKZb7TVoW6RKLoar0znkXWGZVrrdjg31eJqMkZg2Hvf2eLdQ7pIW1yNtH2BEAn6k3SWv4CUtYSqkTiLtOA==",
+  "dgSpecHash": "yUrFQmmfDTYHX9L0ZDJSd/yVi2oguZKkLgDR5pcOVZNBB3Sh1IpCAIcLssSjWOqO3VN4ZOC1kiL5xR305iRRUg==",
   "success": true,
-  "projectFilePath": "C:\\NEvER\\NEvER BackEnd\\ConexionBaseDatos.csproj",
+  "projectFilePath": "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\practicas\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\practicas\\.nuget\\packages\\ikvm\\8.1.5717\\ikvm.8.1.5717.nupkg.sha512",

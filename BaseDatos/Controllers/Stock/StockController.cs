@@ -1,12 +1,14 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Stock.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConexionBaseDatos.Controllers
 {
 
 	[ApiController]
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	[Route("api/stock")]
 	public class StockController : ControllerBase
 	{
@@ -23,26 +25,46 @@ namespace ConexionBaseDatos.Controllers
 		[HttpGet]
 		public ActionResult<List<STOCK>> Get()
 		{
-			return _service.GetStock();
+			try{
+				return _service.GetStock();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("StockController.HttpGet.TryCatch", ex);
+			}
 		}
 
 		[HttpPost]
 		public string Post(CrearStockDTO stock)
 		{
-			return _service.PostStock(stock);
+			try{
+				return _service.PostStock(stock);
+			}
+			catch(Exception ex)
+			{
+				throw new Exception("StockController.HttpPost.TryCatch", ex);
+			}
 		}
 
 		[HttpPut("{id_articulo:int}")]
 		public ActionResult Put(STOCK articulo, int id_articulo)
 		{
-			if (articulo.ID_ARTICULO != id_articulo)
+			try
 			{
-				return BadRequest("El id del articulo no coincide");
+				if (articulo.ID_ARTICULO != id_articulo)
+				{
+					return BadRequest("El id del articulo no coincide");
+				}
+
+				_context.Update(articulo);
+				_context.SaveChanges();
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("StockController.HttpPut.TryCatch", ex);
 			}
 
-			_context.Update(articulo);
-			_context.SaveChanges();
-			return Ok();
 		}
 	}
 }

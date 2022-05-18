@@ -1,10 +1,12 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Pedidos_Articulo.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ConexionBaseDatos.Controllers
 {
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	[ApiController]
 	[Route("api/pedidos_articulos")]
 	public class PedidosArticulosController : ControllerBase
@@ -22,13 +24,27 @@ namespace ConexionBaseDatos.Controllers
 		[HttpGet]
 		public ActionResult<List<PEDIDOS_ARTICULOS>> Get()
 		{
-			return _service.GetPedido_Articulo();
+
+			try{
+				return _service.GetPedido_Articulo();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Pedidos_ArticulosController.HttpGet.TryCatch", ex);
+			}
 		}
 
 		[HttpPost]
 		public string Post(CrearPedido_ArticuloDTO pedido)
 		{
-			return _service.PostPedido_Articulo(pedido);
+
+			try{
+				return _service.PostPedido_Articulo(pedido);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Pedidos_ArticulosController.HttpPost.TryCatch", ex);
+			}
 		}
 	}
 }

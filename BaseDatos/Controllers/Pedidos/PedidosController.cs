@@ -1,10 +1,13 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Pedidos.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace ConexionBaseDatos.Controllers
 {
+	[Authorize(AuthenticationSchemes = "Bearer")]
 	[ApiController]
 	[Route("api/pedidos")]
 	public class Pedidos_ArticulosController : ControllerBase
@@ -22,13 +25,29 @@ namespace ConexionBaseDatos.Controllers
 		[HttpGet]
 		public ActionResult<List<PEDIDOS>> Get()
 		{
-			return _service.GetPedido();
+		
+
+			try{
+				return _service.GetPedido();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("PedidosController.HttpGet.TryCatch", ex);
+			}
 		}
 
 		[HttpPost]
 		public string Post(CrearPedidoDTO pedido)
 		{
-			return _service.PostPedido(pedido);
+			
+
+			try{
+				return _service.PostPedido(pedido);
+			}
+			catch(Exception ex)
+			{
+				throw new Exception("PedidosController.HttpPost.TryCatch", ex);
+			}
 		}
 	}
 }

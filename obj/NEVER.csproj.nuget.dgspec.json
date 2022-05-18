@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NEvER\\NEvER_BackEnd\\ConexionBaseDatos.csproj": {}
+    "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj": {}
   },
   "projects": {
-    "C:\\NEvER\\NEvER_BackEnd\\ConexionBaseDatos.csproj": {
+    "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NEvER\\NEvER_BackEnd\\ConexionBaseDatos.csproj",
-        "projectName": "ConexionBaseDatos",
-        "projectPath": "C:\\NEvER\\NEvER_BackEnd\\ConexionBaseDatos.csproj",
+        "projectUniqueName": "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj",
+        "projectName": "NEVER",
+        "projectPath": "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj",
         "packagesPath": "C:\\Users\\practicas\\.nuget\\packages\\",
         "outputPath": "C:\\NEvER\\NEvER_BackEnd\\obj\\",
         "projectStyle": "PackageReference",

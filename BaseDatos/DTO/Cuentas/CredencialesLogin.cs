@@ -2,12 +2,12 @@
 
 namespace ConexionBaseDatos.BaseDatos.DTO.Cuentas
 {
-	public class CredencialesUsuario
+	public class CredencialesLogin
 	{
 		[Required]
-		[EmailAddress]
-		public string Email { get; set; }
+		public string user	{ get; set; }
 		[Required]
-		public string Password { get; set; }
+		public string pass { get; set; }
+
 	}
 }

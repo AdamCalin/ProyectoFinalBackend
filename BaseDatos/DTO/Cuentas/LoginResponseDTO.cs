@@ -4,5 +4,6 @@
 	{
 		public int retCode { get; set; }
 		public string mensaje { get; set; }
+		public int idUsuario { get; set; }
 	}
 }
