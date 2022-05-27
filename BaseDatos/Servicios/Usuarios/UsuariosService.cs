@@ -1,14 +1,18 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.EntityFrameworkCore;
+using NEVER.BaseDatos.DTO.Usuarios;
 
 namespace ConexionBaseDatos
 {
 
 	public interface IUsuarioService
 	{
-		List<USUARIOS> GetUsuario();
-		public string PostUsuario(CrearUsuarioDTO usuario);
+		Task<List<USUARIOS>> GetUsuario();
+
+		Task<List<USUARIOS>> GetUsuarioId(int id_usuario);
+		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario);
 	}
 
 	public class UsuariosService : IUsuarioService
@@ -20,18 +24,27 @@ namespace ConexionBaseDatos
 		}
 
 
-		public List<USUARIOS> GetUsuario()
+		public async Task<List<USUARIOS>> GetUsuario()
 		{
-			return _context.USUARIOS.ToList();
+			return await _context.USUARIOS.ToListAsync();
 		}
-		public string PostUsuario(CrearUsuarioDTO usuario)
+
+		public async  Task<List<USUARIOS>> GetUsuarioId(int id_usuario)
+		{
+			return _context.USUARIOS.Where(q => q.ID_USUARIO == id_usuario).ToList();
+		}
+		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario)
 		{
 			var mensaje = "";
 			var retCode = 0;
+			ResponseCrearUsuario response = new ResponseCrearUsuario();
 
-			_context.PaCrearUsuario(usuario.usuario, usuario.pass, usuario.id_perfil, usuario.email, out mensaje, out retCode);
+			var retorno = _context.PaCrearUsuario(usuario.usuario, usuario.pass, usuario.id_perfil, usuario.email);
 
-			return "Usuario añadido con éxito";
+			response.mensaje = retorno.mensaje;
+			response.retCode = retorno.retcode;
+
+			return response;
 		}
 	}
 }

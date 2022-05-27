@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using NEVER.BaseDatos.Exceptions;
+using NEVER.BaseDatos.Servicios.Cuentas;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -22,49 +24,25 @@ namespace ConexionBaseDatos.Controllers
 		private readonly IConfiguration configuration;
 		private readonly SignInManager<IdentityUser> signInManager;
 		private readonly ICuentasService _service;
+		private readonly HashService hashService;
 		private readonly CuentasDbContext _context;
 		private readonly IDataProtector dataProtector;
 
-		public CuentasController(UserManager<IdentityUser> userManager, IConfiguration configuration, SignInManager<IdentityUser> signInManager, CuentasDbContext context, ICuentasService service, IDataProtectionProvider dataProtectionProvider)
+		public CuentasController(UserManager<IdentityUser> userManager, 
+		IConfiguration configuration, 
+		SignInManager<IdentityUser> signInManager,
+		CuentasDbContext context, 
+		ICuentasService service,
+		IDataProtectionProvider dataProtectionProvider)
 		{
 			this.userManager = userManager;
 			this.configuration = configuration;
 			this.signInManager = signInManager;
 			this._service = service;
 			this._context = context;
-			dataProtector = dataProtectionProvider.CreateProtector("valor_secreto");
 		}
 
-		[HttpGet("encriptar")]
-		public ActionResult Encriptar()
-		{
-			var textoPlano = "Adam Calin";
-			var textoCifrado = dataProtector.Protect(textoPlano);
-			var textoDesencriptado = dataProtector.Unprotect(textoCifrado);
 
-			return Ok(new
-			{
-				textoPlano = textoPlano,
-				textoCifrado = textoCifrado,
-				textoDesencriptado = textoDesencriptado
-
-			});
-		}
-
-		[HttpGet("hash/{textoPlano}")]
-		public ActionResult RealizarHash(string textPlano)
-		{
-			var resultado1 = hashService.Hash(textoPlano);
-			var resultado2 = hashService.Hash(textoPlano);
-
-			return Ok(new
-			{
-				textPlano = textPlano,
-				Hash1 = resultado1,
-				Hash2 = resultado2
-			});
-
-		}
 
 		[HttpPost("registrar")]
 		public RespuestaAutenticacion Registrar(CredencialesRegister register)
@@ -92,7 +70,7 @@ namespace ConexionBaseDatos.Controllers
 
 
 		[HttpPost("login")]
-		public RespuestaAutenticacion Login(CredencialesLogin login)
+		public async Task<ActionResult<RespuestaAutenticacion>> Login(CredencialesLogin login)
 		{
 			try
 			{
@@ -100,15 +78,15 @@ namespace ConexionBaseDatos.Controllers
 
 				if (respuesta.retCode == 0)
 				{
-					return ConstruirTokenLogin(respuesta);
+					return Ok(ConstruirTokenLogin(respuesta));
 				}
 				else
 				{
-					throw new Exception("CuentasController.HttpPost.Login." + respuesta.mensaje);
+					throw new WrongCredentialsException(respuesta.mensaje);
 				}
-			}catch (Exception ex)
+			}catch ( Exception ex)
 			{
-				throw new Exception("CuentasController.HttpPost.Login.TryCatch", ex);
+				return BadRequest(ex.Message);
 			}
 
 
@@ -138,7 +116,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 
-		private RespuestaAutenticacion ConstruirTokenLogin(LoginResponseDTO credencialesLogin)
+		private Task<RespuestaAutenticacion> ConstruirTokenLogin(LoginResponseDTO credencialesLogin)
 		{
 			var claims = new List<Claim>()
 				{
@@ -156,14 +134,19 @@ namespace ConexionBaseDatos.Controllers
 									expires: expiracion,
 									signingCredentials: creds
 								);
-			return new RespuestaAutenticacion()
-			{
-				Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
-				Expiracion = expiracion
-			};
+			return Task.FromResult(
+										new RespuestaAutenticacion()
+										{
+											Id_usuario = credencialesLogin.idUsuario,
+											Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
+											Expiracion = expiracion
+										}
+			); ; ;
 		}
+
 		private RespuestaAutenticacion ConstruirTokenRegister(CredencialesRegister credencialesRegister)
 		{
+
 			var claims = new List<Claim>()
 				{
 					new Claim("email", credencialesRegister.email)

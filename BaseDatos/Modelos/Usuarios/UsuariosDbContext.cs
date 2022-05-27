@@ -25,7 +25,7 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 
 		}
 		//Obtencion de los datos front para pasarlos al PA de BBDD e insertar los datos en la tabla
-		public void PaCrearUsuario(string usuario, string pass, int id_perfil, string email, out string mensaje, out int retCode)
+		public (string mensaje, int retcode) PaCrearUsuario(string usuario, string pass, int id_perfil, string email)
 		{
 
 			// PARAMETROS OUTPUT
@@ -85,8 +85,19 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 
 			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_USUARIO] @USUARIO, @PASS, @ID_PERFIL, @EMAIL, @RETCODE OUTPUT, @MENSAJE OUTPUT", sqlParameters);
 
-			retCode = (int)paramRETCODE.Value;
-			mensaje = (string)paramMENSAJE.Value;
+
+			if ((int)paramRETCODE.Value < 0)
+			{
+				throw new Exception((string)paramMENSAJE.Value.ToString());
+			}
+
+			//if ((int)paramRETCODE.Value > 0)
+			//{
+			//	return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
+			//}
+
+
+			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value);
 		}
 
 	}

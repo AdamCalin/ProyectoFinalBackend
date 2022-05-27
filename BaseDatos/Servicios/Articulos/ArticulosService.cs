@@ -30,8 +30,8 @@ namespace ConexionBaseDatos
 			{
 				var mensaje = "";
 				var retCode = 0;
-
-				_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.alto, articulo.largo, articulo.ancho, articulo.precio, articulo.n_registro, out mensaje, out retCode);
+			
+				_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.alto, articulo.largo, articulo.ancho, articulo.precio, articulo.n_registro, articulo.talla, articulo.color, articulo.imagen, out mensaje, out retCode);
 
 				return "Articulo añadido correctamente";
 			}
@@ -41,5 +41,6 @@ namespace ConexionBaseDatos
 				throw new Exception(ex.Message);
 			}
 		}
+
 	}
 }

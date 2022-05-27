@@ -27,7 +27,7 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 
 		}
 		//Obtencion de los datos front para pasarlos al PA de BBDD e insertar los datos en la tabla
-		public void PaCrerarArticulo(string descripcion, string fabricante, int peso, int alto, int largo, int ancho, decimal precio, string n_registro, out string mensaje, out int retCode)
+		public void PaCrerarArticulo(string descripcion, string fabricante, int peso, int alto, int largo, int ancho, decimal precio, string n_registro, char talla, string color, byte[] imagen, out string mensaje, out int retCode)
 		{
 
 			// PARAMETROS OUTPUT
@@ -103,12 +103,31 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 					Value = n_registro,
 					SqlDbType = System.Data.SqlDbType.VarChar,
 				},
-
+				new SqlParameter
+				{
+					ParameterName = "TALLA",
+					Value = n_registro,
+					SqlDbType = System.Data.SqlDbType.Char,
+					Size = 3
+				},
+				new SqlParameter
+				{
+					ParameterName = "COLOR",
+					Value = n_registro,
+					SqlDbType = System.Data.SqlDbType.VarChar,
+					Size = 50
+				},
+				new SqlParameter
+				{
+					ParameterName = "IMAGEN",
+					Value = n_registro,
+					SqlDbType = System.Data.SqlDbType.Image
+				},
 				paramRETCODE,
 				paramMENSAJE
 			};
 
-			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_ARTICULO] @DESCRIPCION,	@FABRICANTE,	@PESO,	@LARGO,	@ANCHO,	@ALTO,	@PRECIO, @N_REGISTRO,	@RETCODE OUTPUT,	@MENSAJE OUTPUT", sqlParameters);
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_ARTICULO] @DESCRIPCION,	@FABRICANTE,	@PESO,	@LARGO,	@ANCHO,	@ALTO,	@PRECIO, @N_REGISTRO, @TALLA, @COLOR, @IMAGEN,	@RETCODE OUTPUT,	@MENSAJE OUTPUT", sqlParameters);
 
 			retCode = (int)paramRETCODE.Value;
 			mensaje = (string)paramMENSAJE.Value;

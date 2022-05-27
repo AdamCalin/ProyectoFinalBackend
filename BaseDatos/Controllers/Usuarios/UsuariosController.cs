@@ -3,6 +3,7 @@ using ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos;
 using ConexionBaseDatos.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NEVER.BaseDatos.DTO.Usuarios;
 
 namespace ConexionBaseDatos.Controllers
 {
@@ -22,7 +23,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<List<USUARIOS>> Get()
+		public Task<List<USUARIOS>> Get()
 		{
 			try
 			{
@@ -35,7 +36,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpPost]
-		public string Post(CrearUsuarioDTO usuario)
+		public ResponseCrearUsuario Post(CrearUsuarioDTO usuario)
 		{
 			try
 			{
@@ -64,6 +65,28 @@ namespace ConexionBaseDatos.Controllers
 			catch(Exception ex)
 			{
 				throw new Exception("UsuariosController.HttpPut.TryCatch", ex);
+			}
+		}
+
+		[HttpGet("{id_usuario:int}")]
+		public Task<List<USUARIOS>> Get(int id_usuario)
+		{
+			try
+			{
+				return _service.GetUsuarioId(id_usuario);
+				//if (_context.USUARIOS == id_usuario)
+				//{
+				//	return _service.GetUsuario();
+				//}
+				//else
+				//{
+				//	return BadRequest();
+				//}
+
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
 			}
 		}
 	}

@@ -12,10 +12,24 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ConexionBaseDatos.BaseDatos.Cuentas.Base_Datos;
+using NEVER.BaseDatos.Servicios.Cuentas;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
+
+//CORS
+string MyAllowsSpecificOrigins = "_MyAllowsSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy(MyAllowsSpecificOrigins, builder =>
+	{
+		builder.AllowAnyOrigin();	
+		builder.AllowAnyMethod();
+		builder.AllowAnyHeader();
+	});
+});
 
 builder.Services.AddControllers();
 
@@ -55,7 +69,7 @@ builder.Services.AddAuthorization();
 
 //ENCRIPTACION
 builder.Services.AddDataProtection();
-
+builder.Services.AddTransient<HashService>();
 
 //IDENTIDADES
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
@@ -69,7 +83,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 	.AddDefaultTokenProviders();
 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c=>
 {
@@ -110,6 +124,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(MyAllowsSpecificOrigins);
 
 app.UseAuthorization();
 

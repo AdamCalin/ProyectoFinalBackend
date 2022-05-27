@@ -5,9 +5,6 @@ namespace ConexionBaseDatos.BaseDatos.DTO.Cuentas
 	public class CredencialesRegister
 	{
 		[Required]
-		public int id_perfil { get; set; }
-
-		[Required]
 		[EmailAddress]
 		public string email { get; set; }
 		[Required]

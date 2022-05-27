@@ -10,6 +10,9 @@
 		public int ancho { get; set; }
 		public decimal precio { get; set; }
 		public string n_registro{ get; set; }
+		public char talla { get; set; }
+		public string color { get; set; }
+		public byte[] imagen { get; set; }
 		public string mensaje { get; set; }
 		public int retCode{ get; set; }
 	}

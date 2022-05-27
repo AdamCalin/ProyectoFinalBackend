@@ -28,7 +28,7 @@ namespace ConexionBaseDatos.BaseDatos.Cuentas.Base_Datos
 		}
 		//Obtencion de los datos front para pasarlos al PA de BBDD e insertar los datos en la tabla
 		// PA_COMPROBAR_LOGIN
-		public void PaComprobarLogin(string email, string pass, out string mensaje, out int retCode)
+		public (string mensaje, int retcode) PaComprobarLogin(string email, string pass, byte[] salt)
 		{
 
 			// PARAMETROS OUTPUT
@@ -55,19 +55,26 @@ namespace ConexionBaseDatos.BaseDatos.Cuentas.Base_Datos
 			{
 				new SqlParameter
 				{
-					ParameterName = "EMAIl",
+					ParameterName = "EMAIL",
 					SqlDbType = System.Data.SqlDbType.VarChar,
 					Size = 100,
 					Value = email,
 				},
-
 				new SqlParameter
 				{
 					ParameterName = "PASS",
 					Value = pass,
-					Size = 100,
+					Size = int.MaxValue,
 					SqlDbType = System.Data.SqlDbType.VarChar,
 				},
+				new SqlParameter
+				{
+					ParameterName = "SALT",
+					Value = pass,
+					Size = int.MaxValue,
+					SqlDbType = System.Data.SqlDbType.VarChar,
+				},
+
 
 				paramRETCODE,
 				paramMENSAJE
@@ -75,8 +82,18 @@ namespace ConexionBaseDatos.BaseDatos.Cuentas.Base_Datos
 
 			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_COMPROBAR_LOGIN] @EMAIL, @PASS, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
 
-			retCode = (int)paramRETCODE.Value;
-			mensaje = (string)paramMENSAJE.Value;
+			if ((int)paramRETCODE.Value < 0)
+			{
+				throw new Exception((string)paramMENSAJE.Value.ToString());
+			}
+
+			//if ((int)paramRETCODE.Value > 0)
+			//{
+			//	return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
+			//}
+
+
+			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value);
 		}
 		// PA_LOGIN
 		public (string mensaje, int retcode, int idUsuario ) PaLogin(string user, string pass)
