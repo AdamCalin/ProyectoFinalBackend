@@ -37,6 +37,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 		
 		[HttpPost]
+		[AllowAnonymous]
 		public string Post(CrearArticuloDTO articulo )
 		{
 			try {

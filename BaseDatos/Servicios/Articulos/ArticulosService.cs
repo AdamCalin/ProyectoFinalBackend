@@ -30,14 +30,13 @@ namespace ConexionBaseDatos
 			{
 				var mensaje = "";
 				var retCode = 0;
-			
-				_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.alto, articulo.largo, articulo.ancho, articulo.precio, articulo.n_registro, articulo.talla, articulo.color, articulo.imagen, out mensaje, out retCode);
+				var id_articulo = 0;
+				_context.PaCrerarArticulo(articulo.descripcion, articulo.fabricante, articulo.peso, articulo.largo, articulo.ancho, articulo.alto, articulo.precio, articulo.talla, articulo.color, articulo.n_registro, articulo.imagen, articulo.sexo, out mensaje, out retCode, out id_articulo);
 
 				return "Articulo añadido correctamente";
 			}
 			catch (Exception ex)
 			{
-
 				throw new Exception(ex.Message);
 			}
 		}
