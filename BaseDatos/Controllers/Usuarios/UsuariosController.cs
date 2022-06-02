@@ -69,11 +69,11 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet("{id_usuario:int}")]
-		public Task<List<USUARIOS>> Get(int id_usuario)
+		public async Task<USUARIOS> Get(int id_usuario)
 		{
 			try
 			{
-				return _service.GetUsuarioId(id_usuario);
+				return await _service.GetUsuarioId(id_usuario);
 				//if (_context.USUARIOS == id_usuario)
 				//{
 				//	return _service.GetUsuario();

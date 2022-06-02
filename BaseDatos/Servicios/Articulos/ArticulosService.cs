@@ -21,7 +21,7 @@ namespace ConexionBaseDatos
 
 		public List<ARTICULOS> GetArticulo()
 		{
-			return _context.ARTICULOS.ToList();
+			return _context.ARTICULOS.ToList(); 
 		}
 
 		public string PostArticulo(CrearArticuloDTO articulo)

@@ -72,21 +72,16 @@ namespace ConexionBaseDatos.Controllers
 		[HttpPost("login")]
 		public async Task<ActionResult<RespuestaAutenticacion>> Login(CredencialesLogin login)
 		{
-			try
-			{
+		
 				var respuesta = _service.ComprobacionLogin(login);
 
-				if (respuesta.retCode == 0)
-				{
-					return Ok(ConstruirTokenLogin(respuesta));
-				}
-				else
-				{
-					throw new WrongCredentialsException(respuesta.mensaje);
-				}
-			}catch ( Exception ex)
+			if (respuesta.retCode == 0)
 			{
-				return BadRequest(ex.Message);
+				return Ok(ConstruirTokenLogin(respuesta));
+			}
+			else
+			{
+				throw new WrongCredentialsException(respuesta.mensaje);
 			}
 
 

@@ -11,7 +11,7 @@ namespace ConexionBaseDatos
 	{
 		Task<List<USUARIOS>> GetUsuario();
 
-		Task<List<USUARIOS>> GetUsuarioId(int id_usuario);
+		Task<USUARIOS> GetUsuarioId(int id_usuario);
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario);
 	}
 
@@ -29,9 +29,9 @@ namespace ConexionBaseDatos
 			return await _context.USUARIOS.ToListAsync();
 		}
 
-		public async  Task<List<USUARIOS>> GetUsuarioId(int id_usuario)
+		public async  Task<USUARIOS> GetUsuarioId(int id_usuario)
 		{
-			return _context.USUARIOS.Where(q => q.ID_USUARIO == id_usuario).ToList();
+			return await _context.USUARIOS.Where(q => q.ID_USUARIO == id_usuario).FirstOrDefaultAsync();
 		}
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario)
 		{
