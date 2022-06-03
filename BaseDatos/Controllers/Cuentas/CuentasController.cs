@@ -45,26 +45,18 @@ namespace ConexionBaseDatos.Controllers
 
 
 		[HttpPost("registrar")]
-		public RespuestaAutenticacion Registrar(CredencialesRegister register)
+		public async Task<ActionResult<RespuestaAutenticacion>> Registrar(CredencialesRegister register)
 		{
-			try
-			{
-				var respuesta = _service.PostLogin(register);
+				var respuesta = _service.PostRegister(register);
 
 				if (respuesta.retCode == 0)
 				{
-					return ConstruirTokenRegister(register);
+					return Ok(ConstruirTokenRegister(respuesta));
 				}
 				else
 				{
 					throw new Exception("CuentasController.HttpPost.Registrar." + respuesta.mensaje);
 				}
-
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("CuentasController.HttpPost.Registrar.TryCatch", ex);
-			}
 		}
 
 
@@ -73,7 +65,7 @@ namespace ConexionBaseDatos.Controllers
 		public async Task<ActionResult<RespuestaAutenticacion>> Login(CredencialesLogin login)
 		{
 		
-				var respuesta = _service.ComprobacionLogin(login);
+				var respuesta = _service.PostLogin(login);
 
 			if (respuesta.retCode == 0)
 			{
@@ -136,15 +128,15 @@ namespace ConexionBaseDatos.Controllers
 											Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
 											Expiracion = expiracion
 										}
-			); ; ;
+			);
 		}
 
-		private RespuestaAutenticacion ConstruirTokenRegister(CredencialesRegister credencialesRegister)
+		private Task<RespuestaAutenticacion> ConstruirTokenRegister(LoginResponseDTO credencialesRegister)
 		{
 
 			var claims = new List<Claim>()
 				{
-					new Claim("email", credencialesRegister.email)
+					new Claim("idUsuario", credencialesRegister.idUsuario.ToString())
 				};
 			var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
 			var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
@@ -153,11 +145,14 @@ namespace ConexionBaseDatos.Controllers
 
 			var securityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims, expires: expiracion, signingCredentials: creds);
 
-			return new RespuestaAutenticacion()
-			{
-				Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
-				Expiracion = expiracion
-			};
+			return Task.FromResult(
+													new RespuestaAutenticacion()
+													{
+														Id_usuario = credencialesRegister.idUsuario,
+														Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
+														Expiracion = expiracion
+													}
+						);
 		}
 		private RespuestaAutenticacion RenovarToken(CredencialesLogin credencialesLogin)
 		{

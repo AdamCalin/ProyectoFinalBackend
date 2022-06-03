@@ -23,7 +23,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet]
-		public Task<List<USUARIOS>> Get()
+		public Task<List<ConsultaDatosUsuarioDTO>> Get()
 		{
 			try
 			{
@@ -69,7 +69,7 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet("{id_usuario:int}")]
-		public async Task<USUARIOS> Get(int id_usuario)
+		public async Task<ConsultaDatosUsuarioDTO> Get(int id_usuario)
 		{
 			try
 			{

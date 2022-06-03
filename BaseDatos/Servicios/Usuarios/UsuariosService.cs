@@ -1,6 +1,7 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NEVER.BaseDatos.DTO.Usuarios;
 
@@ -9,9 +10,9 @@ namespace ConexionBaseDatos
 
 	public interface IUsuarioService
 	{
-		Task<List<USUARIOS>> GetUsuario();
+		Task<List<ConsultaDatosUsuarioDTO>> GetUsuario();
 
-		Task<USUARIOS> GetUsuarioId(int id_usuario);
+		Task<ConsultaDatosUsuarioDTO> GetUsuarioId(int id_usuario);
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario);
 	}
 
@@ -24,13 +25,14 @@ namespace ConexionBaseDatos
 		}
 
 
-		public async Task<List<USUARIOS>> GetUsuario()
+		public async Task<List<ConsultaDatosUsuarioDTO>> GetUsuario()
 		{
 			return await _context.USUARIOS.ToListAsync();
 		}
 
-		public async  Task<USUARIOS> GetUsuarioId(int id_usuario)
+		public async  Task<ConsultaDatosUsuarioDTO> GetUsuarioId(int id_usuario)
 		{
+			
 			return await _context.USUARIOS.Where(q => q.ID_USUARIO == id_usuario).FirstOrDefaultAsync();
 		}
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario)

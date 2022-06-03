@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using NEVER.BaseDatos.DTO.Usuarios;
 
 namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 {
@@ -12,13 +13,13 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 		}
 
 		//Set USUARIOS
-		public DbSet<USUARIOS> USUARIOS { get; set; }
+		public DbSet<ConsultaDatosUsuarioDTO> USUARIOS { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
 			//ENTITY USUARIOS
-			modelBuilder.Entity<USUARIOS>(entity =>
+			modelBuilder.Entity<ConsultaDatosUsuarioDTO>(entity =>
 			{
 				entity.HasKey(o => o.ID_USUARIO);
 			});

@@ -28,11 +28,16 @@ namespace ConexionBaseDatos.BaseDatos.Cuentas.Base_Datos
 		}
 		//Obtencion de los datos front para pasarlos al PA de BBDD e insertar los datos en la tabla
 		// PA_COMPROBAR_LOGIN
-		public (string mensaje, int retcode) PaComprobarLogin(string email, string pass, byte[] salt)
+		public (string mensaje, int retcode, int id_usuario) PaRegister(string usuario, string pass, int? id_perfil, string email)
 		{
 
 			// PARAMETROS OUTPUT
-
+			var paramIdUsuario = new SqlParameter
+			{
+				ParameterName = "IDUSUARIO",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.Int,
+			};
 			var paramRETCODE = new SqlParameter
 			{
 				ParameterName = "RETCODE",
@@ -55,45 +60,51 @@ namespace ConexionBaseDatos.BaseDatos.Cuentas.Base_Datos
 			{
 				new SqlParameter
 				{
-					ParameterName = "EMAIL",
+					ParameterName = "USUARIO",
 					SqlDbType = System.Data.SqlDbType.VarChar,
 					Size = 100,
-					Value = email,
+					Value = usuario,
 				},
 				new SqlParameter
 				{
 					ParameterName = "PASS",
 					Value = pass,
-					Size = int.MaxValue,
 					SqlDbType = System.Data.SqlDbType.VarChar,
+					Size = 300,
 				},
 				new SqlParameter
 				{
-					ParameterName = "SALT",
-					Value = pass,
-					Size = int.MaxValue,
-					SqlDbType = System.Data.SqlDbType.VarChar,
+					ParameterName = "ID_PERFIL",
+					Value = DBNull.Value,
+					SqlDbType = System.Data.SqlDbType.Int,
 				},
-
-
+				new SqlParameter
+				{
+					ParameterName = "EMAIL",
+					SqlDbType = System.Data.SqlDbType.VarChar,
+					Size = 100,
+					Value = email,
+				},
+				
+				paramIdUsuario,
 				paramRETCODE,
 				paramMENSAJE
 			};
 
-			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_COMPROBAR_LOGIN] @EMAIL, @PASS, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_REGISTER] @USUARIO, @PASS, @ID_PERFIL, @EMAIL, @IDUSUARIO OUTPUT, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
 
 			if ((int)paramRETCODE.Value < 0)
 			{
 				throw new Exception((string)paramMENSAJE.Value.ToString());
 			}
 
-			//if ((int)paramRETCODE.Value > 0)
-			//{
-			//	return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
-			//}
+			if ((int)paramRETCODE.Value > 0)
+			{
+				return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
+			}
 
 
-			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value);
+			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, (int)paramIdUsuario.Value);
 		}
 		// PA_LOGIN
 		public (string mensaje, int retcode, int idUsuario ) PaLogin(string user, string pass)

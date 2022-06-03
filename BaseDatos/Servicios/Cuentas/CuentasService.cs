@@ -12,8 +12,8 @@ namespace ConexionBaseDatos
 
 	public interface ICuentasService{ 
 	
-		public LoginResponseDTO PostLogin(CredencialesRegister register);
-		public LoginResponseDTO ComprobacionLogin(CredencialesLogin login);
+		public LoginResponseDTO PostRegister(CredencialesRegister register);
+		public LoginResponseDTO PostLogin(CredencialesLogin login);
 	}
 
 	public class CuentasService: ICuentasService
@@ -22,21 +22,22 @@ namespace ConexionBaseDatos
 		public CuentasService(CuentasDbContext context){
 			_context = context;
 		}
-		public LoginResponseDTO PostLogin(CredencialesRegister register)
+		public LoginResponseDTO PostRegister(CredencialesRegister register)
 		{
-			var mensaje = "";
-			var retCode = 0;
+
 			LoginResponseDTO response = new LoginResponseDTO();
-			ResultadoHash resHash = new ResultadoHash();
-			resHash = Hash(register.pass);
-			_context.PaComprobarLogin(register.email, resHash.Hash, resHash.Salt);
+			//ResultadoHash resHash = new ResultadoHash();
+			//resHash = Hash(register.pass);
+			var retorno = _context.PaRegister(register.user, register.pass, register.id_perfil, register.email);
 
-			response.mensaje = mensaje;
-			response.retCode = retCode;
+			response.mensaje = retorno.mensaje;
+			response.retCode = retorno.retcode;
+			response.idUsuario = retorno.id_usuario;
 
-			return  response;
+
+			return response;
 		}
-		public LoginResponseDTO ComprobacionLogin(CredencialesLogin login)
+		public LoginResponseDTO PostLogin(CredencialesLogin login)
 		{
 	
 			LoginResponseDTO response = new LoginResponseDTO();
