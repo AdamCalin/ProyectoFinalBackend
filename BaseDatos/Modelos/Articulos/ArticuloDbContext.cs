@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 
 {
-	public class ArticuloDbContext: IdentityDbContext
+	public class ArticulosDbContext: IdentityDbContext
 	{
-		public ArticuloDbContext(DbContextOptions<ArticuloDbContext> options) : base(options)
+		public ArticulosDbContext(DbContextOptions<ArticulosDbContext> options) : base(options)
 		{
 
 		}

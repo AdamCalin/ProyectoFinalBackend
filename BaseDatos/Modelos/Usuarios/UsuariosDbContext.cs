@@ -80,11 +80,63 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 					SqlDbType = System.Data.SqlDbType.VarChar,
 				},
 
-				paramRETCODE,
-				paramMENSAJE
+				paramMENSAJE,
+				paramRETCODE
 			};
 
-			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_USUARIO] @USUARIO, @PASS, @ID_PERFIL, @EMAIL, @RETCODE OUTPUT, @MENSAJE OUTPUT", sqlParameters);
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_USUARIO] @USUARIO, @PASS, @ID_PERFIL, @EMAIL, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
+
+
+			if ((int)paramRETCODE.Value < 0)
+			{
+				throw new Exception((string)paramMENSAJE.Value.ToString());
+			}
+
+			//if ((int)paramRETCODE.Value > 0)
+			//{
+			//	return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
+			//}
+
+
+			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value);
+		}
+		public (string mensaje, int retcode) PaBorrarUsuario(int id_usuario)
+		{
+
+			// PARAMETROS OUTPUT
+
+			var paramRETCODE = new SqlParameter
+			{
+				ParameterName = "RETCODE",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.Int,
+			};
+
+			var paramMENSAJE = new SqlParameter
+			{
+				ParameterName = "MENSAJE",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.VarChar,
+				Size = 100
+			};
+
+
+			// PARAMETROS INPUT
+
+			var sqlParameters = new[]
+			{
+				new SqlParameter
+				{
+					ParameterName = "ID_USUARIO",
+					SqlDbType = System.Data.SqlDbType.Int,
+					Value = id_usuario,
+				},
+
+				paramMENSAJE,
+				paramRETCODE
+			};
+
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_USUARIO] @ID_USUARIO, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
 
 
 			if ((int)paramRETCODE.Value < 0)

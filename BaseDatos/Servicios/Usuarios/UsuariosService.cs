@@ -14,6 +14,8 @@ namespace ConexionBaseDatos
 
 		Task<ConsultaDatosUsuarioDTO> GetUsuarioId(int id_usuario);
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario);
+		//public string BorarUsuario(int id_usuario);
+
 	}
 
 	public class UsuariosService : IUsuarioService
@@ -48,5 +50,11 @@ namespace ConexionBaseDatos
 
 			return response;
 		}
+		//public async string BorrarUsuario(int id_usuario)
+		//{
+
+		//	return await _context.USUARIOS.PaBorrarUsuario(id_usuario);
+		//}
+
 	}
 }

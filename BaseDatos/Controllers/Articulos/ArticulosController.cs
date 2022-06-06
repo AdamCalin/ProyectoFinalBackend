@@ -15,9 +15,9 @@ namespace ConexionBaseDatos.Controllers
 	{
 
 		public readonly IArticuloService _service;
-		private readonly ArticuloDbContext _context;
+		private readonly ArticulosDbContext _context;
 
-		public ArticulosController(IArticuloService service, ArticuloDbContext context)
+		public ArticulosController(IArticuloService service, ArticulosDbContext context)
 		{
 			_service = service;
 			_context = context;

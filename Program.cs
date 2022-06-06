@@ -4,8 +4,11 @@ using ConexionBaseDatos.BaseDatos.Direcciones.Base_Datos;
 using ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos;
 using ConexionBaseDatos.BaseDatos.Stock.Base_Datos;
 using ConexionBaseDatos.BaseDatos.Pedidos.Base_Datos;
-using Microsoft.EntityFrameworkCore;
 using ConexionBaseDatos.BaseDatos.Pedidos_Articulo.Base_Datos;
+using ConexionBaseDatos.BaseDatos.Perfiles.Base_Datos;
+
+
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
@@ -34,13 +37,14 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 //CONEXION CON LA BBDD DE CADA APARTADO 
-builder.Services.AddDbContext<ArticuloDbContext>(options => options.UseSqlServer( builder.Configuration.GetConnectionString("defaultConnection") ));
+builder.Services.AddDbContext<ArticulosDbContext>(options => options.UseSqlServer( builder.Configuration.GetConnectionString("defaultConnection") ));
 builder.Services.AddDbContext<DireccionesDbContext>(options => options.UseSqlServer( builder.Configuration.GetConnectionString("defaultConnection") ));
 builder.Services.AddDbContext<UsuarioDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<StockDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<PedidosDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<PedidosArticulosDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<CuentasDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+builder.Services.AddDbContext<PerfilesDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 
 
 //SERVICIOS
@@ -51,6 +55,9 @@ builder.Services.AddScoped<IUsuarioService, UsuariosService>();
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IPedidosService, PedidosService>();
 builder.Services.AddScoped<IPedidos_articulosService, Pedidos_ArticulosService>();
+builder.Services.AddScoped<ICuentasService, CuentasService>();
+builder.Services.AddScoped<IPerfilesService, PerfilesService>();
+
 
 //JWT BEARER
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -73,13 +80,14 @@ builder.Services.AddTransient<HashService>();
 
 //IDENTIDADES
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-	.AddEntityFrameworkStores<ArticuloDbContext>()
+	.AddEntityFrameworkStores<ArticulosDbContext>()
 	.AddEntityFrameworkStores<CuentasDbContext>()
 	.AddEntityFrameworkStores<DireccionesDbContext>()
 	.AddEntityFrameworkStores<UsuarioDbContext>()
 	.AddEntityFrameworkStores<StockDbContext>()
 	.AddEntityFrameworkStores<PedidosDbContext>()
 	.AddEntityFrameworkStores<PedidosArticulosDbContext>()
+	.AddEntityFrameworkStores<PerfilesDbContext>()
 	.AddDefaultTokenProviders();
 
 

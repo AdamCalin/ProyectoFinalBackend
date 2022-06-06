@@ -13,8 +13,8 @@ namespace ConexionBaseDatos
 
 	public class ArticuloService: IArticuloService
 	{
-		public ArticuloDbContext _context;
-		public ArticuloService(ArticuloDbContext context){
+		public ArticulosDbContext _context;
+		public ArticuloService(ArticulosDbContext context){
 			_context = context;
 		}
 

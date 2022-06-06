@@ -74,14 +74,6 @@ namespace ConexionBaseDatos.Controllers
 			try
 			{
 				return await _service.GetUsuarioId(id_usuario);
-				//if (_context.USUARIOS == id_usuario)
-				//{
-				//	return _service.GetUsuario();
-				//}
-				//else
-				//{
-				//	return BadRequest();
-				//}
 
 			}
 			catch (Exception ex)
@@ -89,5 +81,19 @@ namespace ConexionBaseDatos.Controllers
 				throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
 			}
 		}
+		//[HttpDelete("{id_usuario:int")]
+		//public async string Delete(int id_usuario)
+		//{
+		//	try
+		//	{
+		//		return await _service.BorrarUsuario(id_usuario);
+
+
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
+		//	}
+		//}
 	}
 }
