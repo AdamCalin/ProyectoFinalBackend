@@ -47,20 +47,13 @@ namespace ConexionBaseDatos.Controllers
 				throw new Exception("UsuariosController.HttpPost.TryCatch", ex);
 			}
 		}
-
-		[HttpPut("{id_usuario:int}")]
-		public ActionResult Put(USUARIOS usuario, int id_usuario)
+		
+		[HttpPut]
+		public async Task<ResponseCrearUsuario> Put(ConsultaDatosUsuarioDTO usuario)
 		{
 			try 
 			{
-				if (usuario.ID_USUARIO != id_usuario)
-				{
-					return BadRequest("El id del usuario no coincide");
-				}
-
-				_context.Update(usuario);
-				_context.SaveChanges();
-				return Ok();
+				return await _service.EditarUsuario(usuario);
 			}
 			catch(Exception ex)
 			{
@@ -81,19 +74,19 @@ namespace ConexionBaseDatos.Controllers
 				throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
 			}
 		}
-		//[HttpDelete("{id_usuario:int")]
-		//public async string Delete(int id_usuario)
-		//{
-		//	try
-		//	{
-		//		return await _service.BorrarUsuario(id_usuario);
+		[HttpDelete("{id_usuario:int}")]
+		public async Task<ResponseCrearUsuario> Delete(int id_usuario)
+		{
+			try
+			{
+				return await _service.BorrarUsuario(id_usuario);
 
 
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
-		//	}
-		//}
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
+			}
+		}
 	}
 }

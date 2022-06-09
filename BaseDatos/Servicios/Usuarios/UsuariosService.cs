@@ -14,7 +14,8 @@ namespace ConexionBaseDatos
 
 		Task<ConsultaDatosUsuarioDTO> GetUsuarioId(int id_usuario);
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario);
-		//public string BorarUsuario(int id_usuario);
+		public Task<ResponseCrearUsuario> BorrarUsuario(int id_usuario);
+		public Task<ResponseCrearUsuario> EditarUsuario(ConsultaDatosUsuarioDTO usuario);
 
 	}
 
@@ -32,9 +33,9 @@ namespace ConexionBaseDatos
 			return await _context.USUARIOS.ToListAsync();
 		}
 
-		public async  Task<ConsultaDatosUsuarioDTO> GetUsuarioId(int id_usuario)
+		public async Task<ConsultaDatosUsuarioDTO> GetUsuarioId(int id_usuario)
 		{
-			
+
 			return await _context.USUARIOS.Where(q => q.ID_USUARIO == id_usuario).FirstOrDefaultAsync();
 		}
 		public ResponseCrearUsuario PostUsuario(CrearUsuarioDTO usuario)
@@ -50,11 +51,36 @@ namespace ConexionBaseDatos
 
 			return response;
 		}
-		//public async string BorrarUsuario(int id_usuario)
-		//{
+		public async Task<ResponseCrearUsuario> BorrarUsuario(int id_usuario)
+		{
+			var mensaje = "";
+			var retCode = 0;
 
-		//	return await _context.USUARIOS.PaBorrarUsuario(id_usuario);
-		//}
+			var retorno =   _context.PaBorrarUsuario(id_usuario);
+			ResponseCrearUsuario response = new ResponseCrearUsuario();
+
+			response.mensaje = retorno.mensaje;
+			response.retCode = retorno.retcode;
+
+			return response;
+
+
+		}
+		public async Task<ResponseCrearUsuario> EditarUsuario(ConsultaDatosUsuarioDTO usuario)
+		{
+			var mensaje = "";
+			var retCode = 0;
+
+			var retorno = _context.PaEditarUsuario(usuario.ID_USUARIO, usuario.USUARIO, usuario.EMAIL, usuario.ID_PERFIL);
+			ResponseCrearUsuario response = new ResponseCrearUsuario();
+
+			response.mensaje = retorno.mensaje;
+			response.retCode = retorno.retcode;
+
+			return response;
+
+
+		}
 
 	}
 }

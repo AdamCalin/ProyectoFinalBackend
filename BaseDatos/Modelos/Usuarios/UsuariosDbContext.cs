@@ -14,7 +14,6 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 
 		//Set USUARIOS
 		public DbSet<ConsultaDatosUsuarioDTO> USUARIOS { get; set; }
-
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
@@ -136,7 +135,7 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 				paramRETCODE
 			};
 
-			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_USUARIO] @ID_USUARIO, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_BORRAR_USUARIO] @ID_USUARIO, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
 
 
 			if ((int)paramRETCODE.Value < 0)
@@ -152,6 +151,75 @@ namespace ConexionBaseDatos.BaseDatos.Usuarios.Base_Datos
 
 			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value);
 		}
+		public (string mensaje, int retcode) PaEditarUsuario(int id_usuario, string usuario, string email, int id_perfil)
+		{
 
+			// PARAMETROS OUTPUT
+
+			var paramRETCODE = new SqlParameter
+			{
+				ParameterName = "RETCODE",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.Int,
+			};
+
+			var paramMENSAJE = new SqlParameter
+			{
+				ParameterName = "MENSAJE",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.VarChar,
+				Size = 100
+			};
+
+
+			// PARAMETROS INPUT
+
+			var sqlParameters = new[]
+			{
+				new SqlParameter
+				{
+					ParameterName = "ID_USUARIO",
+					SqlDbType = System.Data.SqlDbType.Int,
+					Value = id_usuario,
+				},
+				new SqlParameter
+				{
+					ParameterName = "USUARIO",
+					SqlDbType = System.Data.SqlDbType.VarChar,
+					Value = usuario,
+				},
+				new SqlParameter
+				{
+					ParameterName = "EMAIl",
+					SqlDbType = System.Data.SqlDbType.VarChar,
+					Value = email,
+				},
+				new SqlParameter
+				{
+					ParameterName = "ID_PERFIL",
+					SqlDbType = System.Data.SqlDbType.Int,
+					Value = id_perfil,
+				},
+
+				paramMENSAJE,
+				paramRETCODE
+			};
+
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_EDITAR_USUARIO] @ID_USUARIO, @USUARIO, @EMAIL, @ID_PERFIL, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
+
+
+			if ((int)paramRETCODE.Value < 0)
+			{
+				throw new Exception((string)paramMENSAJE.Value.ToString());
+			}
+
+			//if ((int)paramRETCODE.Value > 0)
+			//{
+			//	return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
+			//}
+
+
+			return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value);
+		}
 	}
 }
