@@ -1,13 +1,13 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Stock.Base_Datos;
 using ConexionBaseDatos.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConexionBaseDatos
 {
 	public interface IStockService
 	{
-		List<STOCK> GetStock();
-		public string PostStock(CrearStockDTO stock);
+		public Task<List<V_STOCK>> GetStock();
 	}
 
 	public class StockService : IStockService
@@ -19,23 +19,9 @@ namespace ConexionBaseDatos
 		}
 
 
-		public List<STOCK> GetStock()
+		public Task<List<V_STOCK>> GetStock()
 		{
-			return _context.STOCK.ToList();
-		}
-		public string PostStock(CrearStockDTO stock)
-		{
-			var mensaje = "";
-			var retCode = 0;
-
-			_context.PaCrearStock(stock.id_articulo, stock.cantidad_stock, stock.cantidad_pedido, stock.cantidad_envio, out mensaje, out retCode);
-
-			//if (stock.id_articulo.Exists())
-			//{
-			//	return "EL articulo al cual quieres añadir stock ya existe";
-			//}
-
-			return "Stock del articulo " + "'" + stock.id_articulo + "'" + " añadido correctamente";
+			return  _context.V_STOCK.ToListAsync();
 		}
 	}
 }

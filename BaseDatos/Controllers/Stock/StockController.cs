@@ -23,48 +23,16 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<List<STOCK>> Get()
+		public Task<List<V_STOCK>> Get()
 		{
-			try{
+			try
+			{
 				return _service.GetStock();
 			}
 			catch (Exception ex)
 			{
 				throw new Exception("StockController.HttpGet.TryCatch", ex);
 			}
-		}
-
-		[HttpPost]
-		public string Post(CrearStockDTO stock)
-		{
-			try{
-				return _service.PostStock(stock);
-			}
-			catch(Exception ex)
-			{
-				throw new Exception("StockController.HttpPost.TryCatch", ex);
-			}
-		}
-
-		[HttpPut("{id_articulo:int}")]
-		public ActionResult Put(STOCK articulo, int id_articulo)
-		{
-			try
-			{
-				if (articulo.ID_ARTICULO != id_articulo)
-				{
-					return BadRequest("El id del articulo no coincide");
-				}
-
-				_context.Update(articulo);
-				_context.SaveChanges();
-				return Ok();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("StockController.HttpPut.TryCatch", ex);
-			}
-
 		}
 	}
 }

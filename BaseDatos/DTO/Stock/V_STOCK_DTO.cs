@@ -1,8 +1,10 @@
 ﻿namespace ConexionBaseDatos.DTOs
 {
-	public class CrearStockDTO
+	public class V_STOCK_DTO
 	{
-	public int id_articulo { get; set; }
+		public string descripcion { get; set; }
+		public string color { get; set; }
+		public char talla { get; set; }
 		public int cantidad_stock { get; set; }
 		public int cantidad_pedido { get; set; }
 		public int cantidad_envio { get; set; }
