@@ -3,6 +3,7 @@ using ConexionBaseDatos.BaseDatos.Articulos.Base_Datos;
 using ConexionBaseDatos.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NEVER.BaseDatos.DTO.Articulos;
 
 namespace ConexionBaseDatos.Controllers
 {
@@ -24,30 +25,15 @@ namespace ConexionBaseDatos.Controllers
 		}
 		[HttpGet]
 		[AllowAnonymous]
-		public ActionResult<List<ARTICULOS>> Get()
-		{
-			try
-			{
+		public List<ARTICULOS> Get()
+		{ 
 				return _service.GetArticulo();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("ArticulosController.HttpGet.", ex);
-			}
 		}
 		
 		[HttpPost]
-		[AllowAnonymous]
-		public string Post(CrearArticuloDTO articulo )
+		public ResponseCrearArticulo Post(CrearArticuloDTO articulo )
 		{
-			try {
-				return _service.PostArticulo(articulo);
-			}
-			catch (Exception ex){
-				throw new Exception("ArticulosController.HttpPost.", ex);
-			}
-			
-			 
+				return _service.PostArticulo(articulo); 
 		}
 		[HttpPut("{id_articulo:int}")]
 		public ActionResult Put(ARTICULOS articulo, int id_articulo)

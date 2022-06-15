@@ -12,8 +12,6 @@ namespace ConexionBaseDatos.BaseDatos
 		public Nullable<int> LARGO { get; set; }
 		public Nullable<int> ANCHO { get; set; }
 		public Nullable<decimal> PRECIO { get; set; }
-		public char TALLA	{ get; set; }
-		public string COLOR { get; set; }
 		public string N_REGISTRO { get; set; }
 	}
 }

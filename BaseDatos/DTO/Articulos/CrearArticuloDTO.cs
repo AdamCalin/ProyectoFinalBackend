@@ -1,4 +1,5 @@
-﻿namespace ConexionBaseDatos.DTOs
+﻿
+namespace ConexionBaseDatos.DTOs
 {
 	public class CrearArticuloDTO
 	{

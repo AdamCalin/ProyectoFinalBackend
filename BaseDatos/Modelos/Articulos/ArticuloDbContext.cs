@@ -27,7 +27,7 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 
 		}
 		//Obtencion de los datos front para pasarlos al PA de BBDD e insertar los datos en la tabla
-		public void PaCrerarArticulo(string descripcion, string fabricante, int peso, int largo, int ancho, int alto, decimal precio,char talla, string color, string n_registro, string imagen, char sexo, out string mensaje, out int retCode, out int id_articulo)
+		public void PaCrerarArticulo(string descripcion, string fabricante, int peso, int largo, int ancho, int alto, decimal precio,char talla, string color, string n_registro, string imagen, char sexo, out string mensaje, out int retCode, out int id_articulo, out int cantidad_envio, out int cantidad_pedido, out int cantidad_stock)
 		{
 
 			// PARAMETROS OUTPUT
@@ -49,6 +49,25 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 			var paramIdArticulo = new SqlParameter
 			{
 				ParameterName = "ID_ARTICULO",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.Int
+			};
+			var paramCantidadEnvio = new SqlParameter
+			{
+				ParameterName = "CANTIDAD_ENVIO",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.Int
+
+			};
+			var paramCantidadPedido = new SqlParameter
+			{
+				ParameterName = "CANTIDAD_PEDIDO",
+				Direction = System.Data.ParameterDirection.Output,
+				SqlDbType = System.Data.SqlDbType.Int
+			};
+			var paramCantidadStock = new SqlParameter
+			{
+				ParameterName = "CANTIDAD_STOCK",
 				Direction = System.Data.ParameterDirection.Output,
 				SqlDbType = System.Data.SqlDbType.Int
 			};
@@ -127,7 +146,8 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 				{
 					ParameterName = "IMAGEN",
 					Value = imagen,
-					SqlDbType = System.Data.SqlDbType.VarChar
+					SqlDbType = System.Data.SqlDbType.VarChar,
+					Size = imagen.Length
 				},
 				new SqlParameter
 				{
@@ -135,17 +155,35 @@ namespace ConexionBaseDatos.BaseDatos.Articulos.Base_Datos
 					Value = sexo,
 					SqlDbType = System.Data.SqlDbType.Char
 				},
-				
-				paramRETCODE,
+			
+
 				paramMENSAJE,
-				paramIdArticulo
+				paramRETCODE,
+				paramIdArticulo,
+				paramCantidadEnvio,
+				paramCantidadPedido,
+				paramCantidadStock
 			};
 
-			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_ARTICULO] @DESCRIPCION, @FABRICANTE, @PESO, @LARGO, @ANCHO, @ALTO, @PRECIO, @TALLA, @COLOR, @N_REGISTRO, @IMAGEN, @SEXO, @RETCODE OUTPUT,	@MENSAJE OUTPUT, @ID_ARTICULO OUTPUT",  sqlParameters);
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_CREAR_ARTICULO] @DESCRIPCION, @FABRICANTE, @PESO, @LARGO, @ANCHO, @ALTO, @PRECIO, @TALLA, @COLOR, @N_REGISTRO, @IMAGEN, @SEXO, @MENSAJE OUTPUT, @RETCODE OUTPUT, @ID_ARTICULO OUTPUT,	@CANTIDAD_ENVIO OUTPUT, @CANTIDAD_PEDIDO OUTPUT, @CANTIDAD_STOCK OUTPUT ",  sqlParameters);
 
-			retCode = (int)paramRETCODE.Value;
+			//if ((int)paramRETCODE.Value < 0)
+			//{
+			//	throw new Exception((string)paramMENSAJE.Value.ToString());
+			//}
+
+			//if ((int)paramRETCODE.Value > 0)
+			//{
+			//	return ((string)paramMENSAJE.Value, (int)paramRETCODE.Value, 0);
+			//}
+
+
 			mensaje = (string)paramMENSAJE.Value;
+			retCode = (int)paramRETCODE.Value;
 			id_articulo = (int)paramIdArticulo.Value;
+			cantidad_envio = (int)paramCantidadEnvio.Value;
+			cantidad_pedido = (int)paramCantidadPedido.Value; 
+			cantidad_stock = (int)paramCantidadStock.Value;
 		}
 	}
 

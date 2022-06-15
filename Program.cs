@@ -6,6 +6,10 @@ using ConexionBaseDatos.BaseDatos.Stock.Base_Datos;
 using ConexionBaseDatos.BaseDatos.Pedidos.Base_Datos;
 using ConexionBaseDatos.BaseDatos.Pedidos_Articulo.Base_Datos;
 using ConexionBaseDatos.BaseDatos.Perfiles.Base_Datos;
+using ConexionBaseDatos.BaseDatos.Tienda.Base_Datos;
+using ConexionBaseDatos.BaseDatos.Ropa.Base_Datos;
+
+
 
 
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +49,10 @@ builder.Services.AddDbContext<PedidosDbContext>(options => options.UseSqlServer(
 builder.Services.AddDbContext<PedidosArticulosDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<CuentasDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
 builder.Services.AddDbContext<PerfilesDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+builder.Services.AddDbContext<TiendaDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+builder.Services.AddDbContext<RopaDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("defaultConnection")));
+
+
 
 
 //SERVICIOS
@@ -57,6 +65,10 @@ builder.Services.AddScoped<IPedidosService, PedidosService>();
 builder.Services.AddScoped<IPedidos_articulosService, Pedidos_ArticulosService>();
 builder.Services.AddScoped<ICuentasService, CuentasService>();
 builder.Services.AddScoped<IPerfilesService, PerfilesService>();
+builder.Services.AddScoped<ITiendaService, TiendaService>();
+builder.Services.AddScoped<IRopaService, RopaService>();
+
+
 
 
 //JWT BEARER
@@ -88,6 +100,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 	.AddEntityFrameworkStores<PedidosDbContext>()
 	.AddEntityFrameworkStores<PedidosArticulosDbContext>()
 	.AddEntityFrameworkStores<PerfilesDbContext>()
+	.AddEntityFrameworkStores<TiendaDbContext>()
+	.AddEntityFrameworkStores<RopaDbContext>()
 	.AddDefaultTokenProviders();
 
 

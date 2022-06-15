@@ -19,6 +19,8 @@ namespace ConexionBaseDatos.BaseDatos.Stock.Base_Datos
 			modelBuilder.Entity<V_STOCK>(entity =>
 			{
 				entity.ToView("V_STOCK");
+				entity.Property(e => e.ID_STOCK).HasColumnName("ID_STOCK");
+				entity.Property(e => e.ID_ROPA).HasColumnName("ID_ROPA");
 				entity.Property(e => e.ID_ARTICULO).HasColumnName("ID_ARTICULO");
 				entity.Property(e => e.DESCRIPCION).HasColumnName("DESCRIPCION");
 				entity.Property(e => e.COLOR).HasColumnName("COLOR");
