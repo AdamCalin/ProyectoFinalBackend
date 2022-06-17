@@ -1,6 +1,7 @@
 ﻿using ConexionBaseDatos.BaseDatos;
 using ConexionBaseDatos.BaseDatos.Ropa.Base_Datos;
 using Microsoft.AspNetCore.Mvc;
+using NEVER.BaseDatos.DTO.Ropa;
 
 namespace ConexionBaseDatos.Controllers
 { 
@@ -22,7 +23,20 @@ namespace ConexionBaseDatos.Controllers
 			{
 				return _service.GetRopaId(id_articulo);
 			}
+			[HttpDelete("{id_ropa:int}")]
+			public async Task<ResponseRopa> Delete(int id_ropa)
+			{
+				try
+				{
+					return await _service.BorrarRopa(id_ropa);
 
-			
-		}
+
+				}
+				catch (Exception ex)
+				{
+					throw new Exception("RopaController.HttpGet.TryCatch", ex);
+				}
+			}
+
+	}
 }
