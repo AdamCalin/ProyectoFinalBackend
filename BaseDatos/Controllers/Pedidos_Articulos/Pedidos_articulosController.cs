@@ -3,6 +3,7 @@ using ConexionBaseDatos.BaseDatos.Pedidos_Articulo.Base_Datos;
 using ConexionBaseDatos.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NEVER.BaseDatos.DTO.Pedidos_Articulos;
 
 namespace ConexionBaseDatos.Controllers
 {
@@ -35,16 +36,31 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpPost]
-		public string Post(CrearPedido_ArticuloDTO pedido)
+		public ResponsePedidos_Articulos Post(CrearPedido_ArticuloDTO pedido)
 		{
 
 			try{
-				return _service.PostPedido_Articulo(pedido);
+				return _service.CrearPedido_Articulo(pedido);
 			}
 			catch (Exception ex)
 			{
 				throw new Exception("Pedidos_ArticulosController.HttpPost.TryCatch", ex);
 			}
 		}
+		[HttpDelete("{id_pedido_articulo:int}")]
+		public async Task<ResponsePedidos_Articulos> Delete(int id_pedido_articulo)
+		{
+			try
+			{
+				return await _service.BorrarPedido_Articulo(id_pedido_articulo);
+
+
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("UsuariosController.HttpGet.TryCatch", ex);
+			}
+		}
+
 	}
 }
