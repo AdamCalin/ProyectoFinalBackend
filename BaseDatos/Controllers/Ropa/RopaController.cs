@@ -18,12 +18,12 @@ namespace ConexionBaseDatos.Controllers
 				_service = service;
 				_context = context;
 			}
-			[HttpGet("{id_articulo:int}")]
+		[HttpGet("{id_articulo:int}")]
 			public List<ROPA> Get(int id_articulo)
 			{
 				return _service.GetRopaId(id_articulo);
 			}
-			[HttpDelete("{id_ropa:int}")]
+		[HttpDelete("{id_ropa:int}")]
 			public async Task<ResponseRopa> Delete(int id_ropa)
 			{
 				try
@@ -37,6 +37,20 @@ namespace ConexionBaseDatos.Controllers
 					throw new Exception("RopaController.HttpGet.TryCatch", ex);
 				}
 			}
+        [HttpGet]
+        public List<ROPA> Get(string color, int id_articulo)
+        {
+            try
+            {
+                return _service.GetRopaCarrito(id_articulo, color);
 
-	}
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("RopaController.HttpGet.TryCatch", ex);
+            }
+        }
+
+    }
 }

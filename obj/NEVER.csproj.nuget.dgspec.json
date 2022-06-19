@@ -1,42 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj": {}
+    "C:\\Users\\Adam\\Angular\\Never\\ProyectoFinalBackend\\NEVER.csproj": {}
   },
   "projects": {
-    "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj": {
+    "C:\\Users\\Adam\\Angular\\Never\\ProyectoFinalBackend\\NEVER.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj",
+        "projectUniqueName": "C:\\Users\\Adam\\Angular\\Never\\ProyectoFinalBackend\\NEVER.csproj",
         "projectName": "NEVER",
-        "projectPath": "C:\\NEvER\\NEvER_BackEnd\\NEVER.csproj",
-        "packagesPath": "C:\\Users\\practicas\\.nuget\\packages\\",
-        "outputPath": "C:\\NEvER\\NEvER_BackEnd\\obj\\",
+        "projectPath": "C:\\Users\\Adam\\Angular\\Never\\ProyectoFinalBackend\\NEVER.csproj",
+        "packagesPath": "C:\\Users\\Adam\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Adam\\Angular\\Never\\ProyectoFinalBackend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\DevExpress 20.2\\.NET Core Desktop Libraries\\Offline Packages",
-          "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\DevExpress 21.2\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\practicas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress .NET Core Desktop 20.2.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 19.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.2.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 21.2.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Adam\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 19.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 20.2\\.NET Core Desktop Libraries\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 21.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -115,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.106\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
