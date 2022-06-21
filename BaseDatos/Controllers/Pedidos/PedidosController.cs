@@ -3,6 +3,7 @@ using ConexionBaseDatos.BaseDatos.Pedidos.Base_Datos;
 using ConexionBaseDatos.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NEVER.BaseDatos.DTO.Pedidos;
 using System.Net;
 
 namespace ConexionBaseDatos.Controllers
@@ -23,31 +24,34 @@ namespace ConexionBaseDatos.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<List<PEDIDOS>> Get()
+		public ActionResult<List<PEDIDOS>> Get(string usuario)
 		{
-		
+				return _service.GetPedido(usuario);
 
-			try{
-				return _service.GetPedido();
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("PedidosController.HttpGet.TryCatch", ex);
-			}
+		}
+
+		[HttpGet]
+		[Route("/api/codigo")]
+		public ActionResult<List<PEDIDOS>> GetCodigo(string codigo)
+		{
+			return _service.GetPedidoCodigo(codigo);
+
 		}
 
 		[HttpPost]
-		public string Post(CrearPedidoDTO pedido)
+        [AllowAnonymous]
+		public ResponsePedido Post(CrearPedidoDTO pedido)
 		{
 			
-
-			try{
 				return _service.PostPedido(pedido);
-			}
-			catch(Exception ex)
-			{
-				throw new Exception("PedidosController.HttpPost.TryCatch", ex);
-			}
+		
+		}
+        [HttpDelete]
+		public ResponsePedido Delete(int id_pedido)
+		{
+
+			return _service.BorrarPedido(id_pedido);
+
 		}
 	}
 }

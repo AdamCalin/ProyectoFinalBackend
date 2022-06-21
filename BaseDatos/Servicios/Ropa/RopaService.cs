@@ -10,7 +10,7 @@ namespace ConexionBaseDatos
 		{
 			public List<ROPA> GetRopaId(int id_articulo);
 			public List<ROPA> GetRopaCarrito(int id_articulo, string color);
-			public Task<ResponseRopa> BorrarRopa(int id_ropa);
+			public ResponseRopa BorrarRopa(int id_ropa);
 		}
 
 	public class RopaService : IRopaService
@@ -32,7 +32,7 @@ namespace ConexionBaseDatos
 
 			return  _context.ROPA.Where(q => q.ID_ARTICULO == id_articulo && q.COLOR == color).ToList();
 		}
-		public async Task<ResponseRopa> BorrarRopa(int id_ropa)
+		public ResponseRopa BorrarRopa(int id_ropa)
 		{
 			var mensaje = "";
 			var retCode = 0;

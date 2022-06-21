@@ -28,8 +28,21 @@ namespace ConexionBaseDatos.Controllers
 				}
 				catch (Exception ex)
 				{
-					throw new Exception("StockController.HttpGet.TryCatch", ex);
+					throw new Exception("TiendaController.HttpGet.TryCatch", ex);
 				}
 			}
-		}
+			[HttpGet]
+			[Route("select")]
+			public List<V_TIENDA> Get(string color, int id_articulo)
+			{
+				try
+				{
+					return _service.GetTiendaRopa(color, id_articulo);
+				}
+				catch (Exception ex)
+				{
+					throw new Exception("TiendaController.HttpGet.TryCatch", ex);
+				}
+			}
+    }
 }

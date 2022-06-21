@@ -24,18 +24,11 @@ namespace ConexionBaseDatos.Controllers
 				return _service.GetRopaId(id_articulo);
 			}
 		[HttpDelete("{id_ropa:int}")]
-			public async Task<ResponseRopa> Delete(int id_ropa)
+			public ResponseRopa  Delete(int id_ropa)
 			{
-				try
-				{
-					return await _service.BorrarRopa(id_ropa);
+					return  _service.BorrarRopa(id_ropa);
 
 
-				}
-				catch (Exception ex)
-				{
-					throw new Exception("RopaController.HttpGet.TryCatch", ex);
-				}
 			}
         [HttpGet]
         public List<ROPA> Get(string color, int id_articulo)
@@ -51,6 +44,7 @@ namespace ConexionBaseDatos.Controllers
                 throw new Exception("RopaController.HttpGet.TryCatch", ex);
             }
         }
+
 
     }
 }

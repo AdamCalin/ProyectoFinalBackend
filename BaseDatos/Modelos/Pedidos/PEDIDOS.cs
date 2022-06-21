@@ -3,8 +3,9 @@
 	public class PEDIDOS
 	{
 		public int ID_PEDIDO { get; set; }
-		public int ID_ARTICULO { get; set; }
-		public int CANTIDAD { get; set; }
-		public Nullable<decimal> PRECIO	{ get; set; }
+		public string USUARIO { get; set; }
+		public string CODIGO { get; set; }
+		public int ESTADO { get; set; }
+		public DateTime FECHA	{ get; set; }
 	}
 }

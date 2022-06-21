@@ -43,9 +43,6 @@ namespace ConexionBaseDatos.BaseDatos.Ropa.Base_Datos
 				SqlDbType = System.Data.SqlDbType.Int,
 			};
 
-			
-
-
 			// PARAMETROS INPUT
 
 			var sqlParameters = new[]
@@ -61,7 +58,7 @@ namespace ConexionBaseDatos.BaseDatos.Ropa.Base_Datos
 				paramRETCODE
 			};
 
-			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_BORRAR_ROPA] @ID_ROPA, @MENSAJE OUTPUT, @RETCODE", sqlParameters);
+			this.Database.ExecuteSqlRaw("EXEC [dbo].[PA_BORRAR_ROPA] @ID_ROPA, @MENSAJE OUTPUT, @RETCODE OUTPUT", sqlParameters);
 
 
 			if ((int)paramRETCODE.Value < 0)

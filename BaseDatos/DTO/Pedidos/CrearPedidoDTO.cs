@@ -2,8 +2,10 @@
 {
 	public class CrearPedidoDTO
 	{
-		public int id_articulo { get; set; }
-		public int cantidad { get; set; }
-		public decimal precio { get; set; }
+		public string usuario {get; set; }
+		public string codigo { get; set; }
+		public int estado{ get; set; }
+		public DateTime fecha { get; set; }
+
 	}
 }
